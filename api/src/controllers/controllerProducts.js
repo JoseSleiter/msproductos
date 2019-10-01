@@ -42,3 +42,5 @@ class controllerProducts{
         successResponse(res, "Succes store products", 201, newProducts)
     }
 }
+
+module.exports = controllerProducts;
