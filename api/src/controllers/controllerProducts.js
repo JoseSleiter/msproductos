@@ -1,6 +1,7 @@
 'use strict'
 const ObjectID = require('mongodb').ObjectID;   
 const {successResponse} = require('../helpers/apiResponse')
+const Producto = require('../models/Product')
 
 class controllerProducts{
 
@@ -33,10 +34,12 @@ class controllerProducts{
         let {products} = req.body     
         let newProducts;
 
-        products.map( (product) =>{
-            let newProduct =  await Producto.create(product)
-            newProducts.push(newProduct)
-        })
+        Promise.all(
+            products.map( async (product) =>{
+                let newProduct =  await Producto.create(product)
+                newProducts.push(newProduct)
+            })
+        )
 
         // Success
         successResponse(res, "Succes store products", 201, newProducts)

@@ -19,10 +19,10 @@ const schema = new mongoose.Schema({
     imagePath:{
         type: String,
         required: false,
-        default: "img/default.png"  
+        default: "img/product/default.png"  
     },
     prices:{
-        type: Float,
+        type: Number,
         required: true
     },    
     quantity:{
@@ -51,7 +51,7 @@ schema.statics = {
      * @param {*} id ObjectID 
      */
     get(id){
-        return this.findOne({_id : id}).then((products) => {
+        return this.findOne({code : id}).then((products) => {
             if (products) 
                 return products;            
           const err = {message:"Not exits products", statusCode: 404};
