@@ -1,7 +1,7 @@
 {
-  "name": "mssucursales",
+  "name": "msproductos",
   "version": "1.0.0",
-  "description": "microservicio de sucursales",
+  "description": "microservicio de productos, se encarga de mostrar los productos sacados de almacen y listos para distribuir entre las tiendas",
   "main": "index.js",
   "scripts": {
     "test": "jest",
