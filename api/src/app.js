@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
 var {...handler} = require('./helpers/handlerError')
+const cors = require('cors')
+//  npm i cors
+app.use(cors())
 
 // Middleware
 app.use( express.urlencoded({extended: false}))

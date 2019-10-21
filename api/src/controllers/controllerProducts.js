@@ -25,22 +25,54 @@ class controllerProducts{
     }
 
     /**
-     * Almacena la Store
+     * Almacena los productos
      * 
      * @method POST
-     * @param Direccion Models
      */
     static async store(req, res){
         let {products} = req.body     
         let newProducts;
 
-        Promise.all(
+        await Promise.all(
             products.map( async (product) =>{
                 let newProduct =  await Producto.create(product)
                 newProducts.push(newProduct)
             })
         )
 
+        // Success
+        successResponse(res, "Succes store products", 201, newProducts)
+    }
+
+
+    /**
+     * Disminuye los productos
+     * 
+     * @method POST
+     */
+    static async remove(req, res){
+        let {products} = req.body     
+        let newProducts = [];
+        let newProduct
+        console.log("pidiendo....")
+        // product exits
+        await Promise.all(
+
+            // product exits
+             
+            products.map( async (product) =>{
+                let lastProduct;
+                // check exits of product
+                lastProduct = await Producto.get(product.code)
+                
+                // product exits
+                newProduct = await Producto.setQuantity(lastProduct, product.quantity, "dismi") 
+                console.log("haciendo....")
+                // let newProduct =  await Producto.create(product)
+                newProducts.push(newProduct)
+            })
+        )
+            console.log("se hizo....")
         // Success
         successResponse(res, "Succes store products", 201, newProducts)
     }

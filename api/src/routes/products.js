@@ -7,5 +7,7 @@ products
 .get('/products', asyncMiddleware(ctrProducts.index) )
 .get('/products/:id', asyncMiddleware(ctrProducts.show))
 .post('/products', asyncMiddleware(ctrProducts.store))
+.post('/products/remove', asyncMiddleware(ctrProducts.remove))
+
 
 module.exports = products;

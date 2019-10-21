@@ -58,6 +58,43 @@ schema.statics = {
           return Promise.reject( err)
         });
 
+    },
+    /**
+     * Update product data
+     * @param {*} product Currently product
+     */
+    async setQuantity(product, quantity, type = "plus"){
+        let newQuantity;
+        switch (type) {
+            case "plus":
+                    newQuantity = product.quantity + quantity
+                break;
+        
+            case "dismi":
+                    newQuantity = product.quantity - quantity
+                break;
+            default:
+                    newQuantity = product.quantity + quantity
+                break;
+        }
+
+        await this.model('products').findOneAndUpdate(
+            { _id: product._id }, 
+            { quantity: newQuantity },
+            {new: true}
+        ).then((product) =>{
+            if(product)
+                return product;
+            const err = {message:`Not exits product ${product.code}`, statusCode: 404};
+            return Promise.reject( err)     
+        });
+        // return this.quantity += quantity;
+        // return this.findOneAndUpdate({_id: ObjectID(id)}, this.quantity, {new: true}).then((product) =>{
+        //     if(product)
+        //         return product;
+        //     const err = {message:"Not exits product", statusCode: 404};
+        //     return Promise.reject( err)     
+        // })        
     }
 } 
 
