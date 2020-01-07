@@ -31,12 +31,33 @@ class controllerProducts{
      */
     static async store(req, res){
         let {products} = req.body     
-        let newProducts;
+        let newProducts = [];
+
 
         await Promise.all(
+
+            // product exits            
             products.map( async (product) =>{
-                let newProduct =  await Producto.create(product)
-                newProducts.push(newProduct)
+                let lastProduct;
+                console.log(product)
+
+                // check exits of product
+                lastProduct = await Producto.find({code : product.code})
+                
+                console.log(lastProduct)
+                console.log(!lastProduct)
+
+                // product not exits
+                if(lastProduct.length == 0){      
+                    let newProduct =  await Producto.create(product)                   
+                    newProducts.push(newProduct)                                     
+                
+                // product exits
+                }else{                     
+                    await Producto.setQuantity(lastProduct[0], product.quantity)   
+                    newProducts.push(lastProduct[0])                                     
+ 
+                }                
             })
         )
 
